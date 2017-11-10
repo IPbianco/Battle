@@ -22,35 +22,35 @@ describe Game do
 
   describe "#attack" do
     it 'changes turn from P1 to P2' do
-      subject.attack
+      subject.punch
       expect(subject.turn).to eq 2
     end
 
     it 'changes turn from P2 to P1' do
-      subject.attack
-      subject.attack
+      subject.punch
+      subject.punch
       expect(subject.turn).to eq 1
     end
 
     it 'it attacks P2 when turn is 1' do
       expect(subject).to receive(:private_attack)
-      subject.attack
+      subject.punch
     end
 
     it 'it attacks P1 when turn is 2' do
-      subject.attack
+      subject.punch
       expect(subject).to receive(:private_attack)
-      subject.attack
+      subject.punch
     end
 
     it 'returns true if blocked' do
       allow(subject).to receive(:private_attack).and_return 60
-      expect(subject.attack).to eq true
+      expect(subject.punch).to eq true
     end
 
     it 'returns false if hp after attack and before attack is different' do
       allow(subject).to receive(:private_attack).and_return 40
-      expect(subject.attack).to eq false
+      expect(subject.punch).to eq false
     end
   end
 

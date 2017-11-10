@@ -7,7 +7,7 @@ class Game
     @turn = 1
   end
 
-  def attack
+  def punch
     if @turn == 1
       @turn = 2
       block_check(@player2)
@@ -15,6 +15,10 @@ class Game
       @turn = 1
       block_check(@player1)
     end
+  end
+
+  def current_player
+    @turn == 1 ? @player1 : @player2
   end
 
   def confirmation
