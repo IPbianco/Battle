@@ -25,11 +25,7 @@ class Battle < Sinatra::Base
 
   post "/attack" do
     Game.show.attack
-    if Game.show.turn == 2
-      session[:attack_confirmation] = "#{Game.show.player1.name} attacked #{Game.show.player2.name}."
-    else
-      session[:attack_confirmation] = "#{Game.show.player2.name} attacked #{Game.show.player1.name}."
-    end
+    session[:attack_confirmation] = Game.show.confirmation
     redirect '/play'
   end
 

@@ -1,8 +1,8 @@
 require 'game'
 
 describe Game do
-  let(:player1) { double(:player1, reduce_hp: 'reduced!') }
-  let(:player2) { double(:player2, reduce_hp: 'reduced!') }
+  let(:player1) { double(:player1, reduce_hp: 'reduced!', hp: 60) }
+  let(:player2) { double(:player2, reduce_hp: 'reduced!', hp: 60) }
 
   subject(:game) { described_class.new(player1, player2) }
 
@@ -44,12 +44,12 @@ describe Game do
     end
 
     it 'returns reduced!' do
-      expect(subject.attack).to eq 'reduced!'
+      expect(subject.attack).to eq true
     end
 
     it 'returns reduced!' do
       subject.attack
-      expect(subject.attack).to eq 'reduced!'
+      expect(subject.attack).to eq true
     end
   end
 
