@@ -1,5 +1,5 @@
 class Player
-  attr_reader :name, :hp
+  attr_reader :name, :hp, :damages
   STARTING_HP = 60
   DAMAGE_HP = 10
 
@@ -9,6 +9,17 @@ class Player
  end
 
  def reduce_hp
-   @hp -= DAMAGE_HP if @hp > 0
+   @hp -= damage if @hp > 0
+   @hp = 0 if @hp < 0
+ end
+
+ private
+
+ def damage
+   Player.show_damage
+ end
+
+ def self.show_damage
+   @damages = [0, 5, 10].sample
  end
 end

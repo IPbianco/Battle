@@ -16,6 +16,7 @@
   feature "attacking" do
     before(:each) do
       sign_in_and_play
+      allow(Player).to receive(:show_damage).and_return(10)
       click_button "Attack"
     end
     scenario "attacking player 2 and receive confirmation" do
@@ -39,7 +40,7 @@
     end
 
     scenario "when player 2 reaches 0 HP, you receive a lost confirmation" do
-      11.times do
+      10.times do
         click_button "Attack"
       end
       expect(page).to have_content "Ignacio lost!"

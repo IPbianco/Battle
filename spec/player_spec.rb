@@ -13,6 +13,7 @@ describe Player do
 
   describe '#reduce_hp' do
     it 'reduces hp by 10' do
+      allow(Player).to receive(:show_damage).and_return(10)
       expect { player2.reduce_hp }.to change { player2.hp }.by(-10)
     end
   end
