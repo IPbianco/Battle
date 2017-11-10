@@ -6,41 +6,37 @@
     end
   end
 
-    feature "seeing opponent's hit points" do
-      scenario "visiting play page and seeing 60HP" do
-        sign_in_and_play
-        expect(page).to have_content "60HP"
-      end
+  feature "seeing opponent's hit points" do
+    scenario "visiting play page and seeing 60HP" do
+      sign_in_and_play
+      expect(page).to have_content "HP: 60/60"
+    end
+  end
+
+  feature "attacking" do
+    before(:each) do
+      sign_in_and_play
+      click_button "Attack"
+    end
+    scenario "attacking player 2 and receive confirmation" do
+      expect(page).to have_content "Antonio attacked Ignacio."
     end
 
-    feature "attacking" do
-      scenario "attacking player 2 and receive confirmation" do
-        sign_in_and_play
-        click_button "Attack P2"
-        expect(page).to have_content "Your attack was successful."
-      end
+    scenario "when attacking first_time, reduce player 2 HP by 10" do
+      expect(page).to have_content "P2 HP: 50/60"
+    end
 
-      scenario "when attacking first_time, reduce player 2 HP by 10" do
-        sign_in_and_play
-        click_button "Attack P2"
-        expect(page).to have_content "HP's: 50/60"
-      end
+    scenario "when attacking second_time, reduce player 1 HP by 10" do
+      visit "/play"
+      click_button "Attack"
+      expect(page).to have_content "P1 HP: 50/60"
+    end
 
-      scenario "when attacking second_time, reduce player 1 HP by 10" do
-        sign_in_and_play
-        click_button "Attack P2"
+    scenario "when attacking a third time, reduce player 2 HP by 20" do
+      2.times do
         visit "/play"
-        click_button "Attack P2"
-        expect(page).to have_content "HP's: 50/60"
+        click_button "Attack"
       end
-
-      scenario "when attacking a third time, reduce player 2 HP by 20" do
-        sign_in_and_play
-        click_button "Attack P2"
-        2.times do
-          visit "/play"
-          click_button "Attack P2"
-        end
-        expect(page).to have_content "HP's: 40/60"
-      end
+      expect(page).to have_content "P2 HP: 40/60"
     end
+  end

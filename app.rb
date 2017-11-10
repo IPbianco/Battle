@@ -5,12 +5,14 @@ require_relative './lib/game'
 class Battle < Sinatra::Base
   enable :sessions
   get '/' do
+    session[:attack_confirmation] = nil
     erb :index
   end
 
   get "/play" do
-    @pl1_name = $game.player1.name
-    @pl2_name = $game.player2.name
+    @pl1 = $game.player1
+    @pl2 = $game.player2
+    @attack_confirmation = session[:attack_confirmation]
     erb(:play)
   end
 
@@ -21,11 +23,16 @@ class Battle < Sinatra::Base
     redirect "/play"
   end
 
-  get "/attack" do
-    @hp = $game.attack
-    erb :attack
+  post "/attack" do
+    $game.attack
+    if $game.turn == 2
+      session[:attack_confirmation] = "#{$game.player1.name} attacked #{$game.player2.name}."
+    else
+      session[:attack_confirmation] = "#{$game.player2.name} attacked #{$game.player1.name}."
+    end
+    redirect '/play'
   end
-  
+
   # start the server if ruby file executed directly
   run! if app_file == $0
 end
