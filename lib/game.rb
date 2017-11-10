@@ -17,6 +17,14 @@ class Game
     end
   end
 
+  def self.store(game)
+    @game = game
+  end
+
+  def self.show
+    @game
+  end
+  
   private
 
   def attack_p1

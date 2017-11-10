@@ -10,8 +10,8 @@ class Battle < Sinatra::Base
   end
 
   get "/play" do
-    @pl1 = $game.player1
-    @pl2 = $game.player2
+    @pl1 = Game.show.player1
+    @pl2 = Game.show.player2
     @attack_confirmation = session[:attack_confirmation]
     erb(:play)
   end
@@ -19,16 +19,16 @@ class Battle < Sinatra::Base
   post '/names' do
     player_1 = Player.new(params[:player1])
     player_2 = Player.new(params[:player2])
-    $game = Game.new(player_1, player_2)
+    Game.store(Game.new(player_1, player_2))
     redirect "/play"
   end
 
   post "/attack" do
-    $game.attack
-    if $game.turn == 2
-      session[:attack_confirmation] = "#{$game.player1.name} attacked #{$game.player2.name}."
+    Game.show.attack
+    if Game.show.turn == 2
+      session[:attack_confirmation] = "#{Game.show.player1.name} attacked #{Game.show.player2.name}."
     else
-      session[:attack_confirmation] = "#{$game.player2.name} attacked #{$game.player1.name}."
+      session[:attack_confirmation] = "#{Game.show.player2.name} attacked #{Game.show.player1.name}."
     end
     redirect '/play'
   end

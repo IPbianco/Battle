@@ -52,4 +52,11 @@ describe Game do
       expect(subject.attack).to eq 'reduced!'
     end
   end
+
+  describe '#sel.store' do
+    it 'stores an instance of Game' do
+      Game.store(subject)
+      expect(Game.show).to eq subject
+    end
+  end
 end
