@@ -33,23 +33,24 @@ describe Game do
     end
 
     it 'it attacks P2 when turn is 1' do
-      expect(subject).to receive(:attack_p2)
+      expect(subject).to receive(:private_attack)
       subject.attack
     end
 
     it 'it attacks P1 when turn is 2' do
       subject.attack
-      expect(subject).to receive(:attack_p1)
+      expect(subject).to receive(:private_attack)
       subject.attack
     end
 
-    it 'returns reduced!' do
+    it 'returns true if blocked' do
+      allow(subject).to receive(:private_attack).and_return 60
       expect(subject.attack).to eq true
     end
 
-    it 'returns reduced!' do
-      subject.attack
-      expect(subject.attack).to eq true
+    it 'returns false if hp after attack and before attack is different' do
+      allow(subject).to receive(:private_attack).and_return 40
+      expect(subject.attack).to eq false
     end
   end
 

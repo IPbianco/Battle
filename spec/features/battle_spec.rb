@@ -23,13 +23,19 @@
       expect(page).to have_content "Antonio attacked Ignacio."
     end
 
-    scenario "when attacking first_time, reduce player 2 HP by 10" do
+    scenario "when attacking first time, reduce player 2 HP by 10" do
       expect(page).to have_content "P2 HP: 50/60"
     end
 
-    scenario "when attacking second_time, reduce player 1 HP by 10" do
+    scenario "when attacking second time, reduce player 1 HP by 10" do
       click_button "Attack"
       expect(page).to have_content "P1 HP: 50/60"
+    end
+
+    scenario "when damage is 0, it says player 1 blocked player 2" do
+      allow(Player).to receive(:show_damage).and_return(0)
+      click_button "Attack"
+      expect(page).to have_content "Antonio blocked Ignacio."
     end
 
     scenario "when attacking a third time, reduce player 2 HP by 20" do
