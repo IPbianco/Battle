@@ -9,6 +9,6 @@ class Player
  end
 
  def reduce_hp
-   @hp -= DAMAGE_HP
+   @hp -= DAMAGE_HP if @hp > 0
  end
 end

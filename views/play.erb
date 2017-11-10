@@ -1,10 +1,16 @@
 <%= "#{@pl1.name} vs. #{@pl2.name}" %><br>
 <%= "P1 HP: #{@pl1.hp}/60 P2 HP: #{@pl2.hp}/60" %><br>
 
-<form action= "/attack" method='post'>
-  <button type="submit"> Attack </button>
-</form>
+<% if @pl1.hp > 0 || @pl2.hp > 0 %>
+	<form action= "/attack" method='post'>
+	  <button type="submit"> Attack </button>
+	</form>
+<% end %>
 
 <% if @attack_confirmation %>
   <%= @attack_confirmation %>
+  <% if @pl1.hp == 0 || @pl2.hp == 0 %>
+  	<br><%= "#{@pl2.name} lost!" %>
+  <% end %>
 <% end %>
+

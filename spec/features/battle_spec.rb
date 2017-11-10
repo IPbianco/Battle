@@ -27,16 +27,22 @@
     end
 
     scenario "when attacking second_time, reduce player 1 HP by 10" do
-      visit "/play"
       click_button "Attack"
       expect(page).to have_content "P1 HP: 50/60"
     end
 
     scenario "when attacking a third time, reduce player 2 HP by 20" do
       2.times do
-        visit "/play"
         click_button "Attack"
       end
       expect(page).to have_content "P2 HP: 40/60"
     end
+
+    scenario "when player 2 reaches 0 HP, you receive a lost confirmation" do
+      11.times do
+        click_button "Attack"
+      end
+      expect(page).to have_content "Ignacio lost!"
+    end
+
   end
